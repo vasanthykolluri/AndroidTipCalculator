@@ -1,21 +1,22 @@
 package com.example.tipcalculator;
 
+import android.R.drawable;
 import android.app.Activity;
-import android.app.ActionBar;
-import android.app.Fragment;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.widget.EditText;
-import android.os.Build;
+import android.widget.TextView;
 
 public class MainActivity extends Activity {
 
 	private EditText totalAmountText;
 	private EditText tipAmountText;
+	private static final double TIPPERCENT10 = 0.1;
+	private static final double TIPPERCENT15 = 0.15;
+	private static final double TIPPERCENT20 = 0.2;
+	private double selectedTipPercent = TIPPERCENT10;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -23,24 +24,48 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.activity_main);
 		totalAmountText = (EditText) findViewById(R.id.totalAmountText);
 		tipAmountText = (EditText) findViewById(R.id.tipAmountText);
+
+		totalAmountText.addTextChangedListener(new TextWatcher() {
+
+			public void afterTextChanged(Editable s) {
+			}
+
+			public void beforeTextChanged(CharSequence s, int start, int count,
+					int after) {
+			}
+
+			public void onTextChanged(CharSequence s, int start, int before,
+					int count) {
+				calculateTip(selectedTipPercent);
+			}
+		});
 	}
 
 	public void onTipPercentClick(View v) {
-		float totalAmount = Float.parseFloat(totalAmountText.getText().toString());
-		double tipAmount = 0;
-		
-		switch(v.getId()) {
+		switch (v.getId()) {
 		case R.id.TipPercent10Button:
-			tipAmount  = (totalAmount * 0.1);
+			selectedTipPercent = TIPPERCENT10;
 			break;
 		case R.id.TipPercent15Button:
-			tipAmount = (totalAmount * 0.15);
+			selectedTipPercent = TIPPERCENT15;
 			break;
 		case R.id.TipPercent20Button:
-			tipAmount = (totalAmount * 0.2);
+			selectedTipPercent = TIPPERCENT20;
+			break;
+		default:
+			selectedTipPercent = TIPPERCENT10;
 			break;
 		}
+		calculateTip(selectedTipPercent);
+	}
+	
+	public void calculateTip(double tipPercent) {
+		float totalAmount = 0;
 		
-		tipAmountText.setText(Double.toString(tipAmount));
+		if (totalAmountText.getText().toString().trim().length() > 0) {
+			totalAmount = Float.parseFloat(totalAmountText.getText().toString());
+		}
+		
+		tipAmountText.setText(String.format("%.2f",  totalAmount * tipPercent));
 	}
 }
