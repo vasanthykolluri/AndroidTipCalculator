@@ -45,15 +45,6 @@
        android:onClick="onTipPercentClick"
        android:text="@string/TipPercent15" />
 
-   <TextView
-       android:id="@+id/textView1"
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content"
-       android:layout_alignParentLeft="true"
-       android:layout_below="@+id/TipPercent10Button"
-       android:layout_marginTop="54dp"
-       android:text="@string/TipAmount" />
-
    <EditText
        android:id="@+id/tipAmountText"
        android:layout_width="wrap_content"
@@ -72,6 +63,50 @@
        android:layout_alignParentTop="true"
        android:layout_marginTop="48dp"
        android:text="@string/totalAmountLabel"
+       android:textAppearance="?android:attr/textAppearanceSmall" />
+
+   <TextView
+       android:id="@+id/textView1"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_alignParentLeft="true"
+       android:layout_below="@+id/TipPercent10Button"
+       android:layout_marginTop="93dp"
+       android:text="@string/TipAmount" />
+
+   <SeekBar
+       android:id="@+id/tipPercentSeekBar1"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:layout_alignLeft="@+id/textView1"
+       android:layout_below="@+id/TipPercent10Button"
+       android:layout_marginTop="20dp" />
+
+   <TextView
+       android:id="@+id/textView4"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_alignRight="@+id/tipPercentSeekBar1"
+       android:layout_below="@+id/tipPercentSeekBar1"
+       android:text="@string/seekBarMax"
+       android:textAppearance="?android:attr/textAppearanceSmall" />
+
+   <TextView
+       android:id="@+id/textView3"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_alignLeft="@+id/tipPercentSeekBar1"
+       android:layout_below="@+id/tipPercentSeekBar1"
+       android:text="@string/seekBarMin"
+       android:textAppearance="?android:attr/textAppearanceSmall" />
+
+   <TextView
+       android:id="@+id/tipPercentSeekBarText"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_alignLeft="@+id/TipPercent15Button"
+       android:layout_below="@+id/textView4"
+       android:text="Small Text"
        android:textAppearance="?android:attr/textAppearanceSmall" />
 
 </RelativeLayout>

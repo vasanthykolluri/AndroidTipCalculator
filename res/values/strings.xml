@@ -10,5 +10,7 @@
     <string name="TipAmount">Tip is</string>
     <string name="TipPercent15">15%</string>
     <string name="totalAmountLabel">Enter total amount here:</string>
+    <string name="seekBarMin">0%</string>
+    <string name="seekBarMax">100%</string>
 
 </resources>

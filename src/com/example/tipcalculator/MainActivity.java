@@ -7,24 +7,37 @@ import android.view.View;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.EditText;
+import android.widget.SeekBar;
+import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 
 public class MainActivity extends Activity {
 
 	private EditText totalAmountText;
 	private EditText tipAmountText;
-	private static final double TIPPERCENT10 = 0.1;
-	private static final double TIPPERCENT15 = 0.15;
-	private static final double TIPPERCENT20 = 0.2;
-	private double selectedTipPercent = TIPPERCENT10;
+	private SeekBar tipPercentSeekBar;
+	private TextView tipPercentSeekBarText;
+	
+	private static final int TIPPERCENT10 = 10;
+	private static final int TIPPERCENT15 = 15;
+	private static final int TIPPERCENT20 = 20;
+	private int selectedTipPercent = TIPPERCENT10;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		
 		totalAmountText = (EditText) findViewById(R.id.totalAmountText);
 		tipAmountText = (EditText) findViewById(R.id.tipAmountText);
+		tipPercentSeekBar = (SeekBar) findViewById(R.id.tipPercentSeekBar1);
+		tipPercentSeekBar.setProgress(TIPPERCENT10);
+		tipPercentSeekBar.setMax(100);
+		tipPercentSeekBarText = (TextView) findViewById(R.id.tipPercentSeekBarText);
+    	tipPercentSeekBarText.setText(TIPPERCENT10 + "%");
 
+
+		// on updates to total amount
 		totalAmountText.addTextChangedListener(new TextWatcher() {
 
 			public void afterTextChanged(Editable s) {
@@ -38,6 +51,24 @@ public class MainActivity extends Activity {
 					int count) {
 				calculateTip(selectedTipPercent);
 			}
+		});
+		
+		tipPercentSeekBar.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
+
+		    @Override
+		    public void onStopTrackingTouch(SeekBar seekBar) {
+		    }
+
+		    @Override
+		    public void onStartTrackingTouch(SeekBar seekBar) {
+		    }
+
+		    @Override
+		    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+		    	tipPercentSeekBarText.setText(progress + "%");
+		    	selectedTipPercent = progress;
+		        calculateTip(selectedTipPercent);
+		    }
 		});
 	}
 
@@ -59,13 +90,13 @@ public class MainActivity extends Activity {
 		calculateTip(selectedTipPercent);
 	}
 	
-	public void calculateTip(double tipPercent) {
+	public void calculateTip(int tipPercent) {
 		float totalAmount = 0;
 		
 		if (totalAmountText.getText().toString().trim().length() > 0) {
 			totalAmount = Float.parseFloat(totalAmountText.getText().toString());
 		}
 		
-		tipAmountText.setText(String.format("%.2f",  totalAmount * tipPercent));
+		tipAmountText.setText(String.format("%.2f",  totalAmount * tipPercent/100));
 	}
 }
